@@ -1,12 +1,18 @@
 #include <stdio.h>
+#include <float.h>
 
 double calculat(int input);
 int input();
+#define DBL_MAX __DBL_MAX__
+#define DBL_MIN __DBL_MIN__
 
 int main(int argc, char const *argv[]) {
   int user_input;
-  user_input = input();
-  calculat(user_input);
+  do {
+    user_input = input();
+    calculat(user_input);
+  } while(user_input != -1);
+
 
   return 0;
 }
@@ -33,40 +39,85 @@ int input (){
   return decision;
 }
 
-void add(){
-  printf("What numbers do you want to add\n");
+double* operants(double numbers[2]){
   printf("First number/Second number: ");
   double number_one;
   double number_two;
   scanf("%lf/%lf", &number_one, &number_two);
 
-  printf("%.2lf + %.2lf = %.2lf\n", number_one, number_two, number_one + number_two);
+  numbers[0] = number_one;
+  numbers[1] = number_two;
+  return numbers;
+}
+
+void add(){
+  double numbers[2];
+  operants(numbers);
+  double result = numbers[0] + numbers[1];
+
+if (result < DBL_MAX && result > DBL_MIN) {
+  printf("%.2lf + %.2lf = %.2lf\n", numbers[0], numbers[1], result);
+}
+else if(result >= DBL_MAX){
+  printf("Number overflow\n");
+}
+else{
+  printf("Number underflow\n");
+}
+
 }
 void subtract(){
-  printf("What numbers do you want to subtract\n");
-  printf("First number/Second number: ");
-  double number_one;
-  double number_two;
-  scanf("%lf/%lf", &number_one, &number_two);
+  double numbers[2];
+  operants(numbers);
+  double result = numbers[0] - numbers[1];
 
-  printf("%.2lf - %.2lf = %.2lf\n", number_one, number_two, number_one - number_two);
+  if (result < DBL_MAX && result > DBL_MIN) {
+    printf("%.2lf - %.2lf = %.2lf\n", numbers[0], numbers[1], result);
+  }
+  else if(result >= DBL_MAX){
+    printf("Number overflow\n");
+  }
+  else{
+    printf("Number underflow\n");
+  }
+
 }
 void multiply(){
-  printf("What numbers do you want to multiply\n");
-  printf("First number/Second number: ");
-  double number_one;
-  double number_two;
-  scanf("%lf/%lf", &number_one, &number_two);
+  double numbers[2];
+  operants(numbers);
+  double result = numbers[0] * numbers[1];
 
-  printf("%.2lf * %.2lf = %.2lf\n", number_one, number_two, number_one * number_two);
+  if (result < DBL_MAX && result > DBL_MIN) {
+    printf("%.2lf * %.2lf = %.2lf\n", numbers[0], numbers[1], result);
+  }
+  else if(result >= DBL_MAX){
+    printf("Number overflow\n");
+  }
+  else{
+    printf("Number underflow\n");
+  }
+
+
 }
 void divide(){
-  printf("What numbers do you want to divide\n");
-  printf("First number/Second number: ");
-  double number_one;
-  double number_two;
-  scanf("%lf/%lf", &number_one, &number_two);
-  printf("%.2lf / %.2lf = %.2lf\n", number_one, number_two, number_one / number_two);
+  double numbers[2];
+  operants(numbers);
+  double result = numbers[0] / numbers[1];
+  if (numbers[1] != 0) {
+    if (result < DBL_MAX && result > DBL_MIN) {
+      printf("%.2lf / %.2lf = %.2lf\n", numbers[0], numbers[1], result);
+    }
+    else if(result >= DBL_MAX){
+      printf("Number overflow\n");
+    }
+    else{
+      printf("Number underflow\n");
+    }
+
+  }
+  else{
+    printf("Division by zero\n");
+  }
 }
 
 double calculat(int input){
